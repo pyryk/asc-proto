@@ -1,0 +1,145 @@
+html {
+	font-size: 12px;
+}
+
+h1, h2, h3, h4, h5, h6, p, input, button {
+	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+
+a, a:link, a:active, a:visited {
+	color: rgba(0,0,0,0.7);
+	text-decoration: none;
+}
+
+a:active {
+	color: rgba(0,0,0,0.9);
+	text-decoration: none;
+}
+
+#content {
+	margin: 0 1rem;
+}
+
+li p {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	height: 100%;
+}
+
+li a {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+/* gaia css has only moz-prefixed properties, add standard ones */
+button, a[role="button"] {
+	box-sizing: border-box;
+}
+
+#content h1 {
+	font-size: 2rem;
+	font-weight: normal;
+}
+
+#content p {
+	font-size: 1.5rem;
+}
+
+#content p.description {
+	font-size: 1.2rem;
+}
+
+section[role="region"] > header:first-child .icon {
+	background-position: 4%;
+	background-repeat: no-repeat;
+	background-size: auto 80%;
+}
+
+section[data-type="list"] li .secondary {
+	display: inline-block;
+	margin-left: 10px;
+	font-size: 0.6em;
+	opacity: 0.7;
+}
+
+button, a[role="button"], .button {
+	background-size: auto 100%;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+
+	width: 100%;
+	height: 3.8rem;
+	margin: 0 0 1rem;
+	padding: 0 1.5rem;
+	-moz-box-sizing: border-box;
+	display: inline-block;
+	vertical-align: middle;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	background: #fafafa url(gaia/buttons/images/ui/default.png) repeat-x left bottom / auto 100%;
+	border: 0.1rem solid #a6a6a6;
+	border-radius: 0.2rem;
+	font: 500 1.6rem/3.8rem 'MozTT', Sans-serif;
+	color: #333;
+	text-align: center;
+	text-shadow: 0.1rem 0.1rem 0 rgba(255,255,255,0.3);
+	text-decoration: none;
+	outline: none;
+
+}
+
+button.recommend, a[role="button"].recommend, .button.recommend {
+	background-image: url(gaia/buttons/images/ui/recommend.png);
+	background-color: #00caf2;
+	border-color: #008eab;
+}
+
+/* Press (default & recommend) */
+button:active,
+a[role="button"]:active,
+button.recommend:active,
+a.recommend[role="button"]:active  {
+  border-color: #008aaa;
+  background: #008aaa;
+  background-size: auto 100%;
+  color: #333;
+}
+
+/* Recommend */
+button.recommend,
+a[role="button"].recommend {
+  background-image: url(gaia/buttons/images/ui/recommend.png);
+  background-color: #00caf2;
+  border-color: #008eab;
+}
+
+/* Danger */
+button.danger,
+a.danger[role="button"],
+span.danger[role="button"] {
+  background-image: url(gaia/buttons/images/ui/danger.png);
+  background-color: #b70404;
+  color: #fff;
+  text-shadow: none;
+  border-color: #820000;
+}
+
+/* Danger Press */
+button.danger:active,
+a[role="button"].danger:active,
+.button.danger:active {
+  background-image: url(gaia/buttons/images/ui/danger-press.png);
+  background-color: #890707;
+}
