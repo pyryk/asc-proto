@@ -106,8 +106,7 @@ var app = app || {};
     type: 'create',
     events: {
       'submit .create-form': 'addEvent',
-      'click #photo': 'addPhoto',
-      'keypress .filename': 'createOnEnter'
+      'click #photo': 'addPhoto'
     },
     createOnEnter: function(e) {
       if (e.which === 13) {
@@ -118,6 +117,7 @@ var app = app || {};
       alert('Photo selected.');
     },
     addEvent: function(e) {
+      console.log('creating event', e);
       e.preventDefault();
       var form = $(e.target);
       var data = _.object(_.map(form.serializeArray(), function(it) { return [it.name, it.value] }));
