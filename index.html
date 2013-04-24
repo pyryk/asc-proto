@@ -36,7 +36,7 @@
 			<section role="region">
 				<header>
 					<menu type="toolbar">
-						<!--<a href="#create"><span class="icon icon-add">add</span></a>-->
+						<a href="#create"><span class="icon icon-add">add</span></a>
 					</menu>
 					<h1>Event Engine</h1>
 				</header>
@@ -46,7 +46,16 @@
 					<ul>
 						{{#if files}}
 							{{#each files}}
-								<li><p><a href="{{url}}">{{name}}<span class="secondary">{{date_display}}</span></a></p></li>
+								<li>
+									<p>
+										<a href="{{url}}">
+											<!--{{#if photo}}
+												<img class="event-photo" src="{{photo}}" alt="">
+											{{/if}}-->
+											{{name}}<span class="secondary">{{date_display}}</span>
+										</a>
+									</p>
+								</li>
 							{{/each}}
 						{{else}}
 							<li><p>No events found.</p></li>
@@ -63,17 +72,40 @@
 				</header>
 			</section>
 			<section role="region">
-				<form>
-					<fieldset>
-		        <legend>File</legend>
-		        <section>
-		          <p>
-		            <input type="file" name="file" class="file" required>
-		            <button type="reset">Clear</button>
-		          </p>
-		        </section>
-		      </fieldset>
-					<p><button class="save-button recommend">Add</button></p>
+				<form class="create-form">
+          <p>
+          	<label for="name">Name</label>
+            <input type="text" name="name" class="name" id="name" required>
+          </p>
+          <p>
+          	<label for="date">Date</label>
+            <input type="datetime" name="date" class="datetime" id="date" required>
+          </p>
+          <p>
+          	<label for="location">Location</label>
+          	<select name="location" id="location" required>
+          		<option>Kirjasto 10</option>
+          		<option>Entressen kirjasto</option>
+          		<option>Ison Omenan kirjasto</option>
+          		<option>Oulunkylän kirjasto</option>
+          		<option>Pasilan kirjasto</option>
+          		<option>Tapiolan Kirjasto</option>
+          		<option>Sellon kirjasto</option>
+          	</select>
+          </p>
+          <p>
+          	<label for="maxAttendees">Maximum number of attendees</label>
+            <input type="number" name="maxAttendees" class="maxAttendees" id="maxAttendees" step="1" min="0" >
+          </p>
+          <p>
+          	<label for="photo">Photo</label>
+            <button name="photo" class="photo" id="photo">Select</button>
+          </p>
+          <p>
+          	<label for="description">Description</label>
+            <textarea name="description" class="description" id="description"></textarea>
+          </p>
+					<p><input type="submit" class="button save-button recommend"></p>
 				</form>
 			</section>
 		</script>
@@ -88,13 +120,16 @@
 			
 			{{#if event}}
 				<h1>{{event.name}}</h1>
+				{{#if event.photo}}
+					<p><img class="event-photo" src="{{event.photo}}" alt=""></p>
+				{{/if}}
 				<p>{{event.date_display}} at {{event.location}}</p>
 				<p class="description">{{event.description}}</p>
 				{{#if event.attending}}
-					<p>You are attending. {{event.attendees}} / {{event.maxAttendees}} people attending.</p>
+					<p>You are attending. {{event.attendees}} {{#if event.maxAttendees}}/ {{event.maxAttendees}} {{/if}}people attending.</p>
 					<p><a role="button" class="button cancel danger" href="#">Cancel</a></p>
 				{{else}}
-					<p>{{event.attendees}} / {{event.maxAttendees}} people attending.</p>
+					<p>{{event.attendees}} {{#if event.maxAttendees}}/ {{event.maxAttendees}} {{/if}}people attending.</p>
 					<p><a role="button" class="button attend recommend" href="#">Attend</a></p>
 				{{/if}}
 			{{else}}

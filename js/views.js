@@ -105,7 +105,8 @@ var app = app || {};
   app.views.create = app.views.Page.extend({
     type: 'create',
     events: {
-      'click .save-button': 'addFile',
+      'submit .create-form': 'addEvent',
+      'click #photo': 'addPhoto',
       'keypress .filename': 'createOnEnter'
     },
     createOnEnter: function(e) {
@@ -113,22 +114,16 @@ var app = app || {};
         this.addFile(e);
       }
     },
-    addFile: function(e) {
+    addPhoto: function(e) {
+      alert('Photo selected.');
+    },
+    addEvent: function(e) {
       e.preventDefault();
-      var localFile = this.$('.file')[0].files[0];
+      var form = $(e.target);
+      var data = _.object(_.map(form.serializeArray(), function(it) { return [it.name, it.value] }));
 
-      Backbone.once('db:stored', function(file) {
-        
-      });
-
-      app.db.store(localFile).then(function(file) {
-        var file = new app.models.File({name: file.name});
-        app.files.add(file);
-        file.download();
-        app.router.navigate('details/' + file.cid, {trigger: true});
-      }, function(event) {
-        console.error('Could not add file: ', event);
-      });
+      var event = app.events.create(data);
+      app.router.navigate(event.getUrl(), {trigger: true});
     },
     initialize: function() {
       app.views.Page.prototype.initialize.apply(this, arguments);

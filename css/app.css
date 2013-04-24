@@ -60,6 +60,11 @@ button, a[role="button"] {
 	font-size: 1.2rem;
 }
 
+.event-photo {
+	max-width: 100%;
+	max-height: 20rem;
+}
+
 section[role="region"] > header:first-child .icon {
 	background-position: 4%;
 	background-repeat: no-repeat;
@@ -71,6 +76,11 @@ section[data-type="list"] li .secondary {
 	margin-left: 10px;
 	font-size: 0.6em;
 	opacity: 0.7;
+}
+
+section[data-type="list"] li .event-photo {
+	max-width: 1.8rem;
+	max-height: 1.8rem;
 }
 
 button, a[role="button"], .button {
@@ -98,6 +108,10 @@ button, a[role="button"], .button {
 	text-decoration: none;
 	outline: none;
 
+}
+
+fieldset {
+	margin: 1rem;
 }
 
 button.recommend, a[role="button"].recommend, .button.recommend {
@@ -142,4 +156,28 @@ a[role="button"].danger:active,
 .button.danger:active {
   background-image: url(gaia/buttons/images/ui/danger-press.png);
   background-color: #890707;
+}
+
+form {
+	padding: 1rem;
+}
+
+form label {
+	font-size: 2rem;
+}
+
+/* complement ffos inputs with additional ones */
+input[type="datetime"], select {
+  -moz-box-sizing: border-box;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  height: 4rem;
+  resize: none;
+  padding: 0 1.2rem;
+  font: 1.8rem/4rem "MozTT", Sans-serif;
+  border: 0.1rem solid #ccc;
+  border-radius: 0.3rem;
+  box-shadow: none; /* override the box-shadow from the system (performance issue) */
+  background: #fff url(input_areas/images/ui/shadow.png) repeat-x;
 }
