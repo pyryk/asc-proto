@@ -2,7 +2,7 @@ html {
 	font-size: 12px;
 }
 
-h1, h2, h3, h4, h5, h6, p, input, button {
+h1, h2, h3, h4, h5, h6, p, input, button, li {
 	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
@@ -81,6 +81,51 @@ section[data-type="list"] li .secondary {
 section[data-type="list"] li .event-photo {
 	max-width: 1.8rem;
 	max-height: 1.8rem;
+}
+
+section[role="filters"] ul {
+	margin-top: 0;
+	padding-left: 0;
+	display: box;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -webkit-flexbox;
+	display: flexbox;
+	display: flex;
+}
+
+section[role="filters"] li {
+	list-style-type: none;
+	-webkit-flex: 1 1 auto;
+	box-flex: 1;
+	-webkit-box-flex: 1;
+  flex: 1 1 auto;
+  text-align: center;
+  font-size: 1.3rem;
+  border-top: none;
+  cursor: pointer;
+}
+
+section[role="filters"] li a {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+	-webkit-box-sizing: border-box;
+	padding: 0.4rem 0.2rem;
+
+	background-color: rgba(0,0,0,0.3);
+  color: #555;
+  border: 1px solid #ccc;
+}
+
+section[role="filters"] li a:active {
+	background-color: rgba(0,0,0,0.15);
+  color: #666;
+}
+
+section[role="filters"] li a.selected {
+	background-color: rgba(0,0,0,0.05);
+	color: #444;
 }
 
 button, a[role="button"], .button {
