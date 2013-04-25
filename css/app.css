@@ -226,3 +226,10 @@ input[type="datetime"], select {
   box-shadow: none; /* override the box-shadow from the system (performance issue) */
   background: #fff url(input_areas/images/ui/shadow.png) repeat-x;
 }
+
+footer {
+	font-size: 1.4rem;
+	padding: 0.5rem;
+	border-top: 1px solid #ccc;
+	background-color: #ddd;
+}
