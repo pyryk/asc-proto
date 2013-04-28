@@ -2,6 +2,7 @@
 
 var express = require('express'),
     mongoq = require('mongoq'),
+    ShortId = require('shortid'),
     config = require('./config');
  
 var db = mongoq(config.db); // Initialize database
@@ -21,7 +22,7 @@ app.all('/', function(req, res, next) {
 // Add event
 app.post('/api/events', function(req, res) {
     var event = req.body;
-    event.id = Date.now().toString(); // You probably want to swap this for something like https://github.com/dylang/shortid
+    event.id = ShortId.generate();
  
     db.collection('events').insert(event, {safe: true}).done(function(event) {
         res.json(event[0], 201);

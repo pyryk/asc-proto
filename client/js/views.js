@@ -73,11 +73,11 @@ var app = app || {};
         // if no model found, it may be loaded in the future
         app.events.on('reset add', function() {
           var event = app.events.find(function(it) {
-            return it.cid === id;
+            return it.get('id') === id;
           });
           
           if (event) {
-            this.setId(event.cid);
+            this.setId(event.get('id'));
             this.render();
           } else {
             console.log('event not found');
@@ -113,14 +113,9 @@ var app = app || {};
       event.save(undefined, {
         wait: true,
         success: function() {
-          console.log('success!', arguments);
+          app.router.navigate(event.getUrl(), {trigger: true});
         }
       });
-
-      //app.events.create(data);
-      console.log(event);
-
-      app.router.navigate(event.getUrl(), {trigger: true});
     },
     initialize: function() {
       app.views.Page.prototype.initialize.apply(this, arguments);

@@ -46,7 +46,7 @@ var app = app || {};
     },
     // client-side url
     getUrl: function() {
-      return '#details/' + this.cid;
+      return '#details/' + this.get('id');
     },
     // attending(true) -> adds you to attendees
     // attending(false) -> removes you from the attendees
