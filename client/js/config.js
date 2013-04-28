@@ -4,7 +4,7 @@ var app = app || {};
   'use strict';
 
   var config = {
-  	server: "http://localhost:8080/api"
+  	server: "http://localhost:5000/api"
   };
 
   // override this config with previously set one

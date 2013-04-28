@@ -78,4 +78,4 @@ app.del('/api/events/:id', function(req, res) {
     });
 });
  
-app.listen(8080);
+app.listen(config.port);
