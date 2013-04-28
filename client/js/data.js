@@ -12,11 +12,9 @@ var app = app || {};
   ];
 
   setTimeout(function() {
-  	console.log('loading data', app.events, app.events.length);
-
   	if (app.events.length === 0) {
 	  	_.each(data, function(it) {
-		  	app.events.create(it);
+		  	//app.events.create(it);
 		  });
 	  }
   }, 1000);

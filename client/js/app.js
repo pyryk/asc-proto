@@ -7,6 +7,8 @@ var app = app || {};
   	app.router = new app.Router();
 		Backbone.history.start();
 
+		app.utils.mockLogin();
+
 		app.utils.registerCustomTags();
 
 		app.events.fetch();

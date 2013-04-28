@@ -7,7 +7,7 @@ var app = app || {};
 
   app.collections.Events = Backbone.Collection.extend({
   	model: app.models.Event,
-  	localStorage: new Backbone.LocalStorage("Events"),
+  	url: app.config.server + '/events'
   });
 	app.events = new app.collections.Events();
 

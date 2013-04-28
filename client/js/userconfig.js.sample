@@ -4,6 +4,6 @@ var app = app || {};
   'use strict';
 
   app.config = {
-  	tracker: "http://localhost:8080/"
+  	server: "http://localhost:8080/api" // no trailing slash
   };
 })();

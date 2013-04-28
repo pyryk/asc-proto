@@ -1,6 +1,0 @@
-{
-  "name": "P2P VOD prototype",
-  "description": "A prototype for peer-to-peer video-on-demand web app.",
-  "launch_path": "/index.html",
-  "default_locale": "en"
-}

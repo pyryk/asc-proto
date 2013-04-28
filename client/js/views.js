@@ -29,25 +29,10 @@ var app = app || {};
   	setVisibility: function(flag) {
   		this.visible = flag;
   	},
-    addInstallButton: function() {
-      if (!window.navigator.mozApps) {
-        return; // not possible to install
-      }
-
-      var request = window.navigator.mozApps.getSelf();
-      request.onsuccess = function() {
-        // if the app is not installed
-        if (!request.result) {
-          app.utils.addInstallButton();  
-        }
-      };
-    },
   	render: function() {
   		var data = this.getData();
   		var html = this.template(data);
   		this.$el.html(html);
-
-      this.addInstallButton();
   	}
   });
 
@@ -122,7 +107,19 @@ var app = app || {};
       var form = $(e.target);
       var data = _.object(_.map(form.serializeArray(), function(it) { return [it.name, it.value] }));
 
-      var event = app.events.create(data);
+      var event = new app.models.Event(data);
+      app.events.add(event);
+
+      event.save(undefined, {
+        wait: true,
+        success: function() {
+          console.log('success!', arguments);
+        }
+      });
+
+      //app.events.create(data);
+      console.log(event);
+
       app.router.navigate(event.getUrl(), {trigger: true});
     },
     initialize: function() {
@@ -141,11 +138,11 @@ var app = app || {};
   	},
   	attend: function(e) {
   		e.preventDefault();
-      this.model.set({'attending': true, 'attendees': this.model.get('attendees')+1});
+      this.model.attending(true);
   	},
   	cancel: function(e) {
   		e.preventDefault();
-  		this.model.set({'attending': false, 'attendees': this.model.get('attendees')-1});
+  		this.model.attending(false);
   	},
   	initialize: function() {
   		app.views.Page.prototype.initialize.apply(this, arguments);

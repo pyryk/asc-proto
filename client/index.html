@@ -14,7 +14,6 @@
 		<script src="js/lib/jquery-1.9.1.js" type="text/javascript"></script>
 		<script src="js/lib/underscore.js" type="text/javascript"></script>
 		<script src="js/lib/backbone.js" type="text/javascript"></script>
-		<script src="js/lib/backbone.localStorage.js" type="text/javascript"></script>
 		<script src="js/lib/handlebars.js" type="text/javascript"></script>
 		<script src="js/lib/moment.min.js" type="text/javascript"></script>
 		<script src="js/userconfig.js" type="text/javascript"></script>
@@ -136,10 +135,10 @@
 				<p>{{event.date_display}} at {{event.location}}</p>
 				<p class="description">{{event.description}}</p>
 				{{#if event.attending}}
-					<p>You are attending. {{event.attendees}} {{#if event.maxAttendees}}/ {{event.maxAttendees}} {{/if}}people attending.</p>
+					<p>You are attending. {{event.attendees.length}} {{#if event.maxAttendees}}/ {{event.maxAttendees}} {{/if}}people attending.</p>
 					<p><a role="button" class="button cancel danger" href="#">Cancel</a></p>
 				{{else}}
-					<p>{{event.attendees}} {{#if event.maxAttendees}}/ {{event.maxAttendees}} {{/if}}people attending.</p>
+					<p>{{event.attendees.length}} {{#if event.maxAttendees}}/ {{event.maxAttendees}} {{/if}}people attending.</p>
 					<p><a role="button" class="button attend recommend" href="#">Attend</a></p>
 				{{/if}}
 			{{else}}
