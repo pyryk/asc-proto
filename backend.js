@@ -1,9 +1,10 @@
 // adapted from https://gist.github.com/sbrekken/1999230
 
 var express = require('express'),
-    mongoq = require('mongoq');
+    mongoq = require('mongoq'),
+    config = require('./config');
  
-var db = mongoq('test-database'); // Initialize database
+var db = mongoq(config.db); // Initialize database
  
 var app = express();
 app.use(express.bodyParser()); // Automatically parse JSON in POST requests
