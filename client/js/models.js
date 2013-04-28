@@ -14,7 +14,7 @@ var app = app || {};
     initialize: function() {
       Backbone.Model.prototype.initialize.apply(this, arguments);
 
-      this.once('change', function() { 
+      this.on('change', function() { 
         var changedBackendAttributes = _.omit(this.changedAttributes(), 'attendees');
         console.log(changedBackendAttributes);
         if (!_.isEmpty(changedBackendAttributes)) {
