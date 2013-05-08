@@ -77,7 +77,14 @@ var app = app || {};
     },
     toJSON: function() {
       var data = Backbone.Model.prototype.toJSON.apply(this,arguments);
-      data.date_display = moment(this.get('date')).calendar();
+      var sixDaysFromNow = moment().date(moment().date()+6);
+      var date = moment(this.get('date'));
+      if (date.isBefore(sixDaysFromNow) && date.isAfter(moment())) {
+        data.date_display = date.calendar();
+      } else {
+        data.date_display = date.format('D.M.YYYY HH:mm');
+      }
+      //data.date_display = moment(this.get('date')).calendar();
       data.attending = this.attending();
       data.url = this.getUrl();
 

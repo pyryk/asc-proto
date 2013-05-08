@@ -48,7 +48,9 @@ var app = app || {};
   		}, this);
   	},
   	getData: function() {
-  		return {files: app.events.toJSON()};
+  		return {files: new app.collections.Events(app.events.filter(function(it) {
+        return moment(it.get('date')).isAfter(moment());
+      })).toJSON()};
   	}
   });
 
@@ -122,6 +124,23 @@ var app = app || {};
     },
     getData: function() {
       return {};
+    },
+    render: function() {
+      app.views.Page.prototype.render.apply(this, arguments);
+
+
+      if (!Modernizr.inputtypes['datetime-local']) {
+        $("#date").mobiscroll().datetime({
+          theme: 'android-ics',
+          display: 'bottom',
+          dateOrder: 'ddMMyy',
+          timeWheels: 'HHii',
+          dateFormat: 'yyyy-mm-dd',
+          timeFormat: 'HH:ii'
+        });
+      }
+
+      $('#date').val(moment().add('hours', 1).startOf('hour').format('YYYY-MM-DDTHH:mm'));
     }
   });
 

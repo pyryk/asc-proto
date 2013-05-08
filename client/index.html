@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html class="no-js">
 	<head>
 		<title>Event Engine</title>
 
@@ -16,12 +16,18 @@
 		<script src="js/lib/backbone.js" type="text/javascript"></script>
 		<script src="js/lib/handlebars.js" type="text/javascript"></script>
 		<script src="js/lib/moment.min.js" type="text/javascript"></script>
+		<script src="js/lib/modernizr-latest.js" type="text/javascript"></script>
+		<script src="js/lib/mobiscroll.core.js" type="text/javascript"></script>
+		<script src="js/lib/mobiscroll.datetime.js" type="text/javascript"></script>
+		<script src="js/lib/mobiscroll.android-ics.js" type="text/javascript"></script>
 		<script src="js/userconfig.js" type="text/javascript"></script>
 		<script src="js/config.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="css/gaia/headers.css">
 		<!--<link rel="stylesheet" href="css/gaia/buttons.css">-->
 		<link rel="stylesheet" href="css/gaia/lists.css">
 		<link rel="stylesheet" href="css/gaia/input_areas.css">
+		<link rel="stylesheet" href="css/mobiscroll/mobiscroll.core.css">
+		<link rel="stylesheet" href="css/mobiscroll/mobiscroll.android-ics.css">
 		<link rel="stylesheet" href="css/app.css">
 		<meta charset="utf-8">
 	</head>
@@ -88,7 +94,7 @@
           </p>
           <p>
           	<label for="date">Date</label>
-            <input type="datetime" name="date" class="datetime" id="date" required>
+            <input type="datetime-local" name="date" class="datetime" id="date" required>
           </p>
           <p>
           	<label for="location">Location</label>

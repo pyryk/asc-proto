@@ -212,7 +212,7 @@ form label {
 }
 
 /* complement ffos inputs with additional ones */
-input[type="datetime"], select {
+input[type="datetime"], input[type="datetime-local"], select {
   -moz-box-sizing: border-box;
   display: block;
   overflow: hidden;
