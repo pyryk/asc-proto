@@ -101,7 +101,7 @@ var app = app || {};
       }
     },
     addPhoto: function(e) {
-      alert('Photo selected.');
+      alert('This prototype does not support selecting a photo.');
     },
     addEvent: function(e) {
       console.log('creating event', e);
