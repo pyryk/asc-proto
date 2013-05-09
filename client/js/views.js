@@ -108,7 +108,8 @@ var app = app || {};
       e.preventDefault();
       var form = $(e.target);
       var data = _.object(_.map(form.serializeArray(), function(it) { return [it.name, it.value] }));
-
+      data.owner = app.login;
+      
       var event = new app.models.Event(data);
       app.events.add(event);
 
@@ -169,17 +170,6 @@ var app = app || {};
   			return {message: 'Loading...'}
   		}
   	}
-  });
-
-  app.views.viewFile = app.views.PageWithId.extend({
-    type: 'viewFile',
-    getData: function() {
-      if (this.model) {
-        return {file: this.model.toJSON(true)}
-      } else {
-        return {message: 'No file found'};
-      }
-    }
   });
 
 })();

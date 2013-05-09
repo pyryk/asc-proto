@@ -51,10 +51,10 @@ var app = app || {};
     // attending(true) -> adds you to attendees
     // attending(false) -> removes you from the attendees
     // attending() -> returns true if you are attending / false if youre not
-    // in case if change, syncs it to backend
+    // in case of change, syncs it to backend
     attending: function(flag) {
       if (flag) {
-        if (!this.attending()) {
+        if (!this.attending() && !this.isFull()) {
           this.get('attendees').push(app.login);
 
           this.syncAttending();
@@ -75,6 +75,9 @@ var app = app || {};
         return this.get('attendees').indexOf(app.login) !== -1;
       }
     },
+    isFull: function() {
+      return this.get('maxAttendees') > 0 && this.get('attendees').length >= this.get('maxAttendees');
+    },
     toJSON: function() {
       var data = Backbone.Model.prototype.toJSON.apply(this,arguments);
       var sixDaysFromNow = moment().date(moment().date()+6);
@@ -86,6 +89,7 @@ var app = app || {};
       }
       //data.date_display = moment(this.get('date')).calendar();
       data.attending = this.attending();
+      data.full = this.isFull();
       data.url = this.getUrl();
 
       return data;

@@ -145,24 +145,12 @@
 					<p><a role="button" class="button cancel danger" href="#">Cancel</a></p>
 				{{else}}
 					<p>{{event.attendees.length}} {{#if event.maxAttendees}}/ {{event.maxAttendees}} {{/if}}people attending.</p>
-					<p><a role="button" class="button attend recommend" href="#">Attend</a></p>
+					{{#if event.full}}
+						<p>This event is fully booked.</p>
+					{{else}}
+						<p><a role="button" class="button attend recommend" href="#">Attend</a></p>
+					{{/if}}
 				{{/if}}
-			{{else}}
-				<p>{{message}}</p>
-			{{/if}}
-			</section>
-		</script>
-		<script type="text/x-handlebars-template" id="viewFile-template">
-			<section role="region">
-				<header>
-					<a href="#"><span class="icon icon-back">back</span></a>
-					<h1>{{file.name}}</h1>
-				</header>
-			</section>
-			<section role="region" id="content">
-			
-			{{#if file}}
-				{{showBlob file}}
 			{{else}}
 				<p>{{message}}</p>
 			{{/if}}
