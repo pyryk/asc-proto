@@ -10,6 +10,7 @@ var app = app || {};
 		app.utils.mockLogin();
 
 		app.utils.registerCustomTags();
+		app.utils.initFbLogin();
 
 		app.events.fetch();
   });

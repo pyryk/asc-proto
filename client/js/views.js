@@ -20,6 +20,10 @@ var app = app || {};
   			throw "Could not find template " + templateQuery;
   		}
 
+      Backbone.on('user:login', function() {
+        this.render();
+      }, this);
+
   		var source = templateEl.html();
       this.template = Handlebars.compile(source);
   	},
@@ -108,7 +112,7 @@ var app = app || {};
       e.preventDefault();
       var form = $(e.target);
       var data = _.object(_.map(form.serializeArray(), function(it) { return [it.name, it.value] }));
-      data.owner = app.login;
+      data.owner = app.user.get('name');
       
       var event = new app.models.Event(data);
       app.events.add(event);
@@ -150,6 +154,7 @@ var app = app || {};
   	events: {
   		'click .attend': 'attend',
       'click .cancel': 'cancel',
+      'click .share': 'share'
   	},
   	attend: function(e) {
   		e.preventDefault();
@@ -159,6 +164,10 @@ var app = app || {};
   		e.preventDefault();
   		this.model.attending(false);
   	},
+    share: function(e) {
+      e.preventDefault();
+      this.model.share('facebook');
+    },
   	initialize: function() {
   		app.views.Page.prototype.initialize.apply(this, arguments);
 

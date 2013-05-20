@@ -23,32 +23,38 @@ var app = app || {};
 
   app.utils.registerCustomTags = function() {
 
-    Handlebars.registerHelper('showBlob', function(file) {
-      console.log(file);
-      if (!file.blob) {
-        return new Handlebars.SafeString('<p>No file found.</p>');
-      }
-      var blobURL = window.URL.createObjectURL(file.blob);
-
-      var containers = {
-        'image': '<img class="blob-display" src="' + blobURL + '">',
-        'video': '<video class="blob-display" src="' + blobURL + '" controls></video>',
-        'audio': '<audio class="blob-display" src="' + blobURL + '" controls></audio>'
-      };
-
-      if (containers[file.blob.type]) {
-        return new Handlebars.SafeString(containers[file.blob.type]);
-      }
-
-      var vagueType = file.blob.type.substring(0, file.blob.type.indexOf('/'));
-      if (containers[vagueType]) {
-        return new Handlebars.SafeString(containers[vagueType]);
-      }
-
-      return new Handlebars.SafeString('<a href="' + blobURL + '" download="' + file.name + '">Download</a>');
-
-    });
   }
 
+  app.utils.initFbLogin = function() {
+      // init the FB JS SDK
+      FB.init({
+        appId      : '379499668834068',                        // App ID from the app dashboard
+        //channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel file for x-domain comms
+        status     : true,                                 // Check Facebook Login status
+        cookie     : true
+      });
+
+    FB.login(function(response) {
+      if (response.authResponse) {
+        FB.api('/me', function(response) {
+          console.log('User info', response);
+          app.user = new app.models.User({
+            'name': response.username,
+            'realName': response.name
+          });
+          Backbone.trigger('user:login');
+        });
+      } else {
+        console.log('User cancelled login or did not fully authorize.');
+      }
+    }, {scope: 'email'});
+    // Additional initialization code such as adding Event Listeners goes here
+    };
+
+    app.utils.absoluteUrl = function(relative) {
+      var a = document.createElement('a');
+      a.href = relative;
+      return a.href;
+    }
 	
 })();

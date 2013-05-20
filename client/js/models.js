@@ -31,7 +31,7 @@ var app = app || {};
         url: this.url() + '/attend',
         contentType: 'application/json',
         data: JSON.stringify({
-          user: app.login,
+          user: app.user.get('name'),
           attends: this.attending()
         })
       };
@@ -55,15 +55,15 @@ var app = app || {};
     attending: function(flag) {
       if (flag) {
         if (!this.attending() && !this.isFull()) {
-          this.get('attendees').push(app.login);
+          this.get('attendees').push(app.user.get('name'));
 
           this.syncAttending();
         }
         return true;
       } else if (flag === false) {
         if (this.attending()) {
-          while (this.get('attendees').indexOf(app.login) >= 0) {
-            this.get('attendees').splice(this.get('attendees').indexOf(app.login), 1);
+          while (app.user && this.get('attendees').indexOf(app.user.get('name')) >= 0) {
+            this.get('attendees').splice(this.get('attendees').indexOf(app.user.get('name')), 1);
           }
 
           console.log(this.get('attendees'), this.attending());
@@ -72,21 +72,46 @@ var app = app || {};
         }
         return false;
       } else {
-        return this.get('attendees').indexOf(app.login) !== -1;
+        return app.user && this.get('attendees').indexOf(app.user.get('name')) !== -1;
       }
+    },
+    share: function(media) {
+      if (media == 'facebook') {
+
+        var obj = {
+          method: 'feed',
+          link: document.location.toString(),
+          picture: app.utils.absoluteUrl(this.get('photo')),
+          name: this.get('name') + ' @ ' + this.getDateDisplay() + ' - Event Engine',
+          caption: '',
+          description: this.get('description')
+        };
+
+        FB.ui(obj, function(resp) {
+          if (resp.post_id) {
+            console.log('Post successful.', resp);
+          } else {
+            console.log('User canceled the share');
+          }
+        });
+      }
+      
     },
     isFull: function() {
       return this.get('maxAttendees') > 0 && this.get('attendees').length >= this.get('maxAttendees');
     },
+    getDateDisplay: function() {
+      var sixDaysFromNow = moment().date(moment().date()+6);
+        var date = moment(this.get('date'));
+        if (date.isBefore(sixDaysFromNow) && date.isAfter(moment())) {
+          return date.calendar();
+        } else {
+          return date.format('D.M.YYYY HH:mm');
+        }
+    },
     toJSON: function() {
       var data = Backbone.Model.prototype.toJSON.apply(this,arguments);
-      var sixDaysFromNow = moment().date(moment().date()+6);
-      var date = moment(this.get('date'));
-      if (date.isBefore(sixDaysFromNow) && date.isAfter(moment())) {
-        data.date_display = date.calendar();
-      } else {
-        data.date_display = date.format('D.M.YYYY HH:mm');
-      }
+      data.date_display = this.getDateDisplay();
       //data.date_display = moment(this.get('date')).calendar();
       data.attending = this.attending();
       data.full = this.isFull();
@@ -94,6 +119,9 @@ var app = app || {};
 
       return data;
     }
+  });
+
+  app.models.User = Backbone.Model.extend({
   });
 
 })();
