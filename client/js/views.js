@@ -43,10 +43,14 @@ var app = app || {};
   app.views.landing = app.views.Page.extend({
     type: 'landing',
     events: {
-      'click .login': 'login'
+      'click .login.fb': 'login',
+      'click .login.library': 'loginLib'
     },
     login: function() {
       app.utils.login();
+    },
+    loginLib: function() {
+      alert('Library card login is not yet supported.');
     },
     getData: function() {
       return {user: app.user ? app.user.toJSON() : undefined};
@@ -56,10 +60,14 @@ var app = app || {};
   app.views.index = app.views.Page.extend({
   	type: 'index',
     events: {
-      'click .login': 'login'
+      'click .login.fb': 'login',
+      'click .login.library': 'loginLib'
     },
     login: function() {
       app.utils.login();
+    },
+    loginLib: function() {
+      alert('Library card login is not yet supported.');
     },
   	initialize: function() {
   		app.views.Page.prototype.initialize.apply(this, arguments);
@@ -181,7 +189,9 @@ var app = app || {};
       'click .share.email.start': 'shareEmail',
       'click .share.email.confirm': 'shareEmailConfirm',
       'click .share.email.close': 'shareEmailClose',
-      'click .login': 'login'
+      'click .login.fb': 'login',
+      'click .login.library': 'loginLib'
+
   	},
   	attend: function(e) {
   		e.preventDefault();
@@ -221,6 +231,9 @@ var app = app || {};
     },
     login: function() {
       app.utils.login();
+    },
+    loginLib: function() {
+      alert('Library card login is not yet supported.');
     },
   	initialize: function() {
   		app.views.Page.prototype.initialize.apply(this, arguments);
