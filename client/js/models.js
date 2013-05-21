@@ -77,14 +77,18 @@ var app = app || {};
     },
     share: function(media, opts) {
       if (media == 'facebook') {
+
         var obj = {
-          method: 'feed',
+          method: opts && opts.type === "send" ? 'send' : 'feed',
           link: document.location.toString(),
-          picture: app.utils.absoluteUrl(this.get('photo')),
           name: this.get('name') + ' @ ' + this.getDateDisplay() + ' - Event Engine',
-          caption: '',
-          description: this.get('description')
         };
+
+        if (!opts || opts.type !== "send") {
+          obj.picture = app.utils.absoluteUrl(this.get('photo'));
+          obj.caption = '';
+          obj.description = this.get('description');
+        }
 
         FB.ui(obj, function(resp) {
           if (resp && resp.post_id) {

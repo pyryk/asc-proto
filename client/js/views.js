@@ -177,6 +177,7 @@ var app = app || {};
   		'click .attend': 'attend',
       'click .cancel': 'cancel',
       'click .share.fb': 'shareFb',
+      'click .share.fbmsg': 'shareFbMessage',
       'click .share.email.start': 'shareEmail',
       'click .share.email.confirm': 'shareEmailConfirm',
       'click .share.email.close': 'shareEmailClose',
@@ -193,6 +194,10 @@ var app = app || {};
     shareFb: function(e) {
       e.preventDefault();
       this.model.share('facebook');
+    },
+    shareFbMessage: function(e) {
+      e.preventDefault();
+      this.model.share('facebook', {type: 'send'});
     },
     shareEmail: function(e) {
       e.preventDefault();
