@@ -142,15 +142,6 @@
 				{{/if}}
 				<p>{{event.date_display}} at {{event.location}}</p>
 				<p class="description">{{event.description}}</p>
-				<p><a href="#" class="share button">Share</a></p>
-				<section data-type="list">
-					<header>Attendees</header>
-					<ul>
-						{{#each event.attendees}}
-						<li><p>{{this}}</p></li>
-						{{/each}}
-					</ul>
-				</section>
 				{{#if event.attending}}
 					<p>You are attending. {{event.attendees.length}} {{#if event.maxAttendees}}/ {{event.maxAttendees}} {{/if}}people attending.</p>
 					<p><a role="button" class="button cancel danger" href="#">Cancel</a></p>
@@ -162,6 +153,21 @@
 						<p><a role="button" class="button attend recommend" href="#">Attend</a></p>
 					{{/if}}
 				{{/if}}
+				<section data-type="list">
+					<header>Share</header>
+					<ul>
+						<li><p><a href="#" class="share fb button">Facebook</a></p></li>
+						<li><p><a href="#" class="share email button">Email</a></p></li>
+					</ul>
+				</section>
+				<section data-type="list">
+					<header>Attendees</header>
+					<ul>
+						{{#each event.attendees}}
+						<li><p>{{this}}</p></li>
+						{{/each}}
+					</ul>
+				</section>
 			{{else}}
 				<p>{{message}}</p>
 			{{/if}}

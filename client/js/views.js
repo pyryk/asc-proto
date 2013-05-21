@@ -154,7 +154,8 @@ var app = app || {};
   	events: {
   		'click .attend': 'attend',
       'click .cancel': 'cancel',
-      'click .share': 'share'
+      'click .share.fb': 'shareFb',
+      'click .share.email': 'shareEmail',
   	},
   	attend: function(e) {
   		e.preventDefault();
@@ -164,9 +165,13 @@ var app = app || {};
   		e.preventDefault();
   		this.model.attending(false);
   	},
-    share: function(e) {
+    shareFb: function(e) {
       e.preventDefault();
       this.model.share('facebook');
+    },
+    shareEmail: function(e) {
+      e.preventDefault();
+      this.model.share('email');
     },
   	initialize: function() {
   		app.views.Page.prototype.initialize.apply(this, arguments);

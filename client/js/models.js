@@ -88,12 +88,15 @@ var app = app || {};
         };
 
         FB.ui(obj, function(resp) {
-          if (resp.post_id) {
+          if (resp && resp.post_id) {
             console.log('Post successful.', resp);
           } else {
             console.log('User canceled the share');
           }
         });
+      } else {
+        console.log('Sharing via', media, 'is not supported.');
+        alert('Sharing via ' + media + ' is not yet supported.');
       }
       
     },
