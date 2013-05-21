@@ -164,7 +164,9 @@ var app = app || {};
   		'click .attend': 'attend',
       'click .cancel': 'cancel',
       'click .share.fb': 'shareFb',
-      'click .share.email': 'shareEmail',
+      'click .share.email.start': 'shareEmail',
+      'click .share.email.confirm': 'shareEmailConfirm',
+      'click .share.email.close': 'shareEmailClose',
       'click .login': 'login'
   	},
   	attend: function(e) {
@@ -181,7 +183,23 @@ var app = app || {};
     },
     shareEmail: function(e) {
       e.preventDefault();
-      this.model.share('email');
+      this.$('.share-dialog-canvas').show();
+    },
+    shareEmailClose: function(e) {
+      e.preventDefault();
+      this.$('.share-dialog-canvas').hide();
+    },
+    shareEmailConfirm: function(e) {
+      e.preventDefault();
+      var field = $(e.target).parents('.share-dialog').find('textarea');
+      var emails = field.val().split(/[,\n]/);
+
+      this.model.share('email', {emails: emails}).done(_.bind(function() {
+        field.val('');
+        this.shareEmailClose(e);
+      }, this)).fail(_.bind(function() {
+        alert('Could not send the emails. Please try again later.');
+      }, this));
     },
     login: function() {
       app.utils.login();

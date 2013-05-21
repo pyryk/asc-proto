@@ -131,14 +131,21 @@
 			</section>
 		</script>
 		<script type="text/x-handlebars-template" id="details-template">
-			<section role="region">
+			<section role="region" class="base">
 				<header>
 					<a href="#"><span class="icon icon-back">back</span></a>
 					<h1>Event Engine</h1>
 				</header>
 			</section>
-			<section role="region" id="content">
+			<section role="region" id="content" class="base">
 			{{#if user}}
+				<div class="share-dialog-canvas">
+					<section role="region" class="share-dialog">
+						<header><h1>Invite via Email</h1></header>
+						<p><textarea placeholder="Type email addresses here, each to a separate line or separated by commas."></textarea></p>
+						<p><a class="share email confirm button recommend">Send</a><a class="share email close button">Cancel</a></p>
+					</section>
+				</div>
 				{{#if event}}
 					<h1>{{event.name}}</h1>
 					{{#if event.photo}}
@@ -165,7 +172,7 @@
 						{{/if}}
 						<ul>
 							<li><p><a href="#" class="share fb button">Facebook</a></p></li>
-							<li><p><a href="#" class="share email button">Email</a></p></li>
+							<li><p><a href="#" class="share email start button">Email</a></p></li>
 						</ul>
 					</section>
 					<section data-type="list">

@@ -3,9 +3,17 @@
 var express = require('express'),
     mongoq = require('mongoq'),
     ShortId = require('shortid'),
-    config = require('./config');
+    config = require('./config'),
+    nodemailer = require("nodemailer");
  
 var db = mongoq(config.db); // Initialize database
+var sendmail = nodemailer.createTransport("SMTP", {
+    service: 'Gmail',
+    auth: {
+        user: config.mailuser,
+        pass: config.mailpass
+    }
+});
  
 var app = express();
 app.use(express.bodyParser()); // Automatically parse JSON in POST requests
@@ -70,6 +78,33 @@ app.post('/api/events/:id/attend', function(req, res) {
     db.collection('events').update({id: req.params.id}, operation, {safe: true}).then(function(success) {
         res.json(success ? 200 : 404);
     }, function() { console.log(arguments) });
+});
+
+app.post('/api/events/:id/invite', function(req, res) {
+    var data = req.body;
+    db.collection('events').findOne({id: req.params.id}).done(function(event) {
+        for (var i in data.emails) {
+            (function(i) {
+                var mailoptions = {
+                    from: 'Event Engine <noreply@event-engine.herokuapp.com>',
+                    to: data.emails[i],
+                    subject: event.name + ' ' + event.date_display,
+                    text: 'Hi,\n' + event.name + ' is organized ' + event.date_display + ' at ' + event.location + '. Join the event at http://' + req.headers.host + '/#details/' + event.id
+                }
+                console.log(req.headers);
+                sendmail.sendMail(mailoptions, function(error, response) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Message sent to ' + data.emails[i]);
+                    }
+                })
+            })(i);
+        }    
+        res.json({success: true});
+    });
+    
+
 });
  
 // Delete event

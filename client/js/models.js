@@ -75,9 +75,8 @@ var app = app || {};
         return app.user && this.get('attendees').indexOf(app.user.get('name')) !== -1;
       }
     },
-    share: function(media) {
+    share: function(media, opts) {
       if (media == 'facebook') {
-
         var obj = {
           method: 'feed',
           link: document.location.toString(),
@@ -94,6 +93,10 @@ var app = app || {};
             console.log('User canceled the share');
           }
         });
+      } else if (media === 'email') {
+        return $.post(this.url() + '/invite', {emails: opts.emails})
+          .done(function() {console.log('invite ok');})
+          .fail(function() {console.log('invite failed');})
       } else {
         console.log('Sharing via', media, 'is not supported.');
         alert('Sharing via ' + media + ' is not yet supported.');
@@ -116,7 +119,7 @@ var app = app || {};
       if (!app.user) {
         return false;
       }
-      
+
       return this.get('owner') === app.user.get('name');
     },
     toJSON: function() {
