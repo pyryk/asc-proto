@@ -40,6 +40,19 @@ var app = app || {};
   	}
   });
 
+  app.views.landing = app.views.Page.extend({
+    type: 'landing',
+    events: {
+      'click .login': 'login'
+    },
+    login: function() {
+      app.utils.login();
+    },
+    getData: function() {
+      return {user: app.user ? app.user.toJSON() : undefined};
+    }
+  });
+
   app.views.index = app.views.Page.extend({
   	type: 'index',
     events: {

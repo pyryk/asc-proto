@@ -41,12 +41,29 @@
 				<a href="https://docs.google.com/forms/d/1Eoyl-IanFgfzuj5wEtmLyBp1h0RupTas-jZymEnxgGc/viewform">Send feedback about the app</a>
 			</footer>
 		</div>
+		<script type="text/x-handlebars-template" id="landing-template">
+			<section role="region">
+				<header>
+					<h1>Event Engine</h1>
+				</header>
+			</section>
+			<section role="region" class="landing">
+				{{#if user}}
+				<h2>What do you want to do?</h2>
+					<p>Do you want to browse events or create an event?</p>
+					<p><a class="button" href="#index">Browse events</a></p>
+					<p><a class="button" href="#create">Create an event</a></p>
+				{{else}}
+					<h2>Login</h2>
+					<p>Please log in. Currently we support logging in only with a Facebook account.</p>
+					<p><a class="login button recommend">Login with Facebook</a></p>
+				{{/if}}
+			</section>
+		</script>
 		<script type="text/x-handlebars-template" id="index-template">
 			<section role="region">
 				<header>
-					<menu type="toolbar">
-						<a href="#create"><span class="icon icon-add">add</span></a>
-					</menu>
+					<a href="#"><span class="icon icon-back">back</span></a>
 					<h1>Event Engine</h1>
 				</header>
 			</section>
@@ -133,7 +150,7 @@
 		<script type="text/x-handlebars-template" id="details-template">
 			<section role="region" class="base">
 				<header>
-					<a href="#"><span class="icon icon-back">back</span></a>
+					<a href="#index"><span class="icon icon-back">back</span></a>
 					<h1>Event Engine</h1>
 				</header>
 			</section>

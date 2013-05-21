@@ -4,7 +4,7 @@
 	app.Router = Backbone.Router.extend({
 		pages: {},
 		currentPage: undefined,
-		defaultPage: 'index',
+		defaultPage: 'landing',
 		routes: {
 			"":      "showPage",
 			":page(/)(:id)": "showPage",
@@ -14,6 +14,7 @@
 			console.warn('Unrecognized path: ', path);
 		},
 		showPage: function(page, id) {
+			console.log('showing page', page);
 			var view;
 			if (!this.pages[page]) {
 				if (!page) {
