@@ -31,8 +31,9 @@ var app = app || {};
         FB.api('/me', function(response) {
           console.log('User info', response);
           app.user = new app.models.User({
-            'name': response.username,
-            'realName': response.name
+            'name': response.name  + ' (' + response.username + ')',
+            'realName': response.name,
+            'username': response.username
           });
           Backbone.trigger('user:login');
         });
