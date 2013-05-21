@@ -42,6 +42,12 @@ var app = app || {};
 
   app.views.index = app.views.Page.extend({
   	type: 'index',
+    events: {
+      'click .login': 'login'
+    },
+    login: function() {
+      app.utils.login();
+    },
   	initialize: function() {
   		app.views.Page.prototype.initialize.apply(this, arguments);
 
@@ -52,9 +58,12 @@ var app = app || {};
   		}, this);
   	},
   	getData: function() {
-  		return {files: new app.collections.Events(app.events.filter(function(it) {
-        return moment(it.get('date')).isAfter(moment());
-      })).toJSON()};
+  		return {
+        files: new app.collections.Events(app.events.filter(function(it) {
+          return moment(it.get('date')).isAfter(moment());
+        })).toJSON(),
+        user: app.user ? app.user.toJSON(): undefined
+      };
   	}
   });
 
@@ -156,6 +165,7 @@ var app = app || {};
       'click .cancel': 'cancel',
       'click .share.fb': 'shareFb',
       'click .share.email': 'shareEmail',
+      'click .login': 'login'
   	},
   	attend: function(e) {
   		e.preventDefault();
@@ -173,13 +183,16 @@ var app = app || {};
       e.preventDefault();
       this.model.share('email');
     },
+    login: function() {
+      app.utils.login();
+    },
   	initialize: function() {
   		app.views.Page.prototype.initialize.apply(this, arguments);
 
   	},
   	getData: function() {
   		if (this.model) {
-  			return 	{event: this.model.toJSON(true)};
+  			return 	{event: this.model.toJSON(true), user: app.user ? app.user.toJSON(): undefined};
   		} else {
   			return {message: 'Loading...'}
   		}

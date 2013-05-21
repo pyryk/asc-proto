@@ -112,6 +112,13 @@ var app = app || {};
           return date.format('D.M.YYYY HH:mm');
         }
     },
+    isOwn: function() {
+      if (!app.user) {
+        return false;
+      }
+      
+      return this.get('owner') === app.user.get('name');
+    },
     toJSON: function() {
       var data = Backbone.Model.prototype.toJSON.apply(this,arguments);
       data.date_display = this.getDateDisplay();
@@ -119,6 +126,7 @@ var app = app || {};
       data.attending = this.attending();
       data.full = this.isFull();
       data.url = this.getUrl();
+      data.isOwn = this.isOwn();
 
       return data;
     }

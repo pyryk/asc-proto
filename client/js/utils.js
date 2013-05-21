@@ -25,15 +25,7 @@ var app = app || {};
 
   }
 
-  app.utils.initFbLogin = function() {
-      // init the FB JS SDK
-      FB.init({
-        appId      : '379499668834068',                        // App ID from the app dashboard
-        //channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel file for x-domain comms
-        status     : true,                                 // Check Facebook Login status
-        cookie     : true
-      });
-
+  app.utils.login = function() {
     FB.login(function(response) {
       if (response.authResponse) {
         FB.api('/me', function(response) {
@@ -48,7 +40,18 @@ var app = app || {};
         console.log('User cancelled login or did not fully authorize.');
       }
     }, {scope: 'email'});
-    // Additional initialization code such as adding Event Listeners goes here
+  }
+
+  app.utils.initFbLogin = function() {
+      // init the FB JS SDK
+      FB.init({
+        appId      : '379499668834068',                        // App ID from the app dashboard
+        //channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel file for x-domain comms
+        status     : true,                                 // Check Facebook Login status
+        cookie     : true
+      });
+
+      app.utils.login();
     };
 
     app.utils.absoluteUrl = function(relative) {
