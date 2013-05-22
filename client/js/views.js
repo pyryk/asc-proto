@@ -9,6 +9,11 @@ var app = app || {};
   	type: undefined,
   	el: '#main',
   	visible: false,
+    events: {
+      'click .login.library': 'loginLib',
+      'click .login.ee': 'loginEe',
+      'click .login.fb': 'loginFb'
+    },
   	initialize: function() {
   		if (this.type === undefined) {
   			throw "Page must be extended and type property set";
@@ -27,12 +32,29 @@ var app = app || {};
   		var source = templateEl.html();
       this.template = Handlebars.compile(source);
   	},
+    loginFb: function() {
+      if (this)
+      app.utils.login();
+    },
+    loginLib: function() {
+      if (this.isActive()) {
+        alert('Library card login is not yet supported.');
+      }
+    },
+    loginEe: function() {
+      if (this.isActive()) {
+        alert('Event engine login is not yet supported.');
+      }
+    },
   	setId: function() {
   		// do nothing by default
   	},
   	setVisibility: function(flag) {
   		this.visible = flag;
   	},
+    isActive: function() {
+      return app.router.currentPage === this;
+    },
   	render: function() {
   		var data = this.getData();
   		var html = this.template(data);
@@ -42,16 +64,10 @@ var app = app || {};
 
   app.views.landing = app.views.Page.extend({
     type: 'landing',
-    events: {
-      'click .login.fb': 'login',
-      'click .login.library': 'loginLib'
-    },
-    login: function() {
-      app.utils.login();
-    },
-    loginLib: function() {
-      alert('Library card login is not yet supported.');
-    },
+    events: _.extend(_.clone(app.views.Page.prototype.events), {
+      
+    }),
+    
     getData: function() {
       return {user: app.user ? app.user.toJSON() : undefined};
     }
@@ -59,16 +75,9 @@ var app = app || {};
 
   app.views.index = app.views.Page.extend({
   	type: 'index',
-    events: {
-      'click .login.fb': 'login',
-      'click .login.library': 'loginLib'
-    },
-    login: function() {
-      app.utils.login();
-    },
-    loginLib: function() {
-      alert('Library card login is not yet supported.');
-    },
+    events: _.extend(_.clone(app.views.Page.prototype.events), {
+      
+    }),
   	initialize: function() {
   		app.views.Page.prototype.initialize.apply(this, arguments);
 
@@ -125,10 +134,10 @@ var app = app || {};
 
   app.views.create = app.views.Page.extend({
     type: 'create',
-    events: {
+    events: _.extend(_.clone(app.views.Page.prototype.events), {
       'submit .create-form': 'addEvent',
       'click #photo': 'addPhoto'
-    },
+    }),
     createOnEnter: function(e) {
       if (e.which === 13) {
         this.addFile(e);
@@ -181,18 +190,15 @@ var app = app || {};
 
   app.views.details = app.views.PageWithId.extend({
   	type: 'details',
-  	events: {
+  	events: _.extend(_.clone(app.views.Page.prototype.events), {
   		'click .attend': 'attend',
       'click .cancel': 'cancel',
       'click .share.fb': 'shareFb',
       'click .share.fbmsg': 'shareFbMessage',
       'click .share.email.start': 'shareEmail',
       'click .share.email.confirm': 'shareEmailConfirm',
-      'click .share.email.close': 'shareEmailClose',
-      'click .login.fb': 'login',
-      'click .login.library': 'loginLib'
-
-  	},
+      'click .share.email.close': 'shareEmailClose'
+  	}),
   	attend: function(e) {
   		e.preventDefault();
       this.model.attending(true);
@@ -231,9 +237,6 @@ var app = app || {};
     },
     login: function() {
       app.utils.login();
-    },
-    loginLib: function() {
-      alert('Library card login is not yet supported.');
     },
   	initialize: function() {
   		app.views.Page.prototype.initialize.apply(this, arguments);
