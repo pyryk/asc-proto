@@ -26,22 +26,47 @@ var app = app || {};
   }
 
   app.utils.login = function() {
+
+    var opts = {scope: 'email'};
+    var ua = navigator.userAgent;
+
+    if (ua.indexOf('iPhone') == -1 && ua.indexOf('iPad') == -1 && ua.indexOf('iPod') == -1) {
+      
+    } else if (ua.indexOf('Safari') > -1) {
+      // ua contains safari => not homescreen app => no redirect URI
+      
+    } else { // ios but not safari => add redirect URI
+      opts.redirect_uri = document.location.href;
+    }
+
     FB.login(function(response) {
       if (response.authResponse) {
-        FB.api('/me', function(response) {
-          console.log('User info', response);
-          app.user = new app.models.User({
-            'name': response.name  + ' (' + response.username + ')',
-            'realName': response.name,
-            'username': response.username
-          });
-          Backbone.trigger('user:login');
-        });
+        app.utils.setUserInfo();
       } else {
         console.log('User cancelled login or did not fully authorize.');
       }
-    }, {scope: 'email'});
+    }, opts);
   }
+
+  app.utils.setUserInfo = function() {
+    FB.api('/me', function(response) {
+      console.log('User info', response);
+      app.user = new app.models.User({
+        'name': response.name  + ' (' + response.username + ')',
+        'realName': response.name,
+        'username': response.username
+      });
+      Backbone.trigger('user:login');
+    });
+  };
+
+  app.utils.checkLogin = function() {
+    FB.getLoginStatus(function(resp) {
+      if (resp.authResponse) {
+        app.utils.setUserInfo();
+      }
+    })
+  };
 
   app.utils.initFbLogin = function() {
       // init the FB JS SDK
@@ -52,7 +77,7 @@ var app = app || {};
         cookie     : true
       });
 
-      app.utils.login();
+      app.utils.checkLogin();
     };
 
     app.utils.absoluteUrl = function(relative) {

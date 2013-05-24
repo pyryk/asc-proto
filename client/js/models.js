@@ -8,8 +8,8 @@ var app = app || {};
   app.models.Event = Backbone.Model.extend({
   	defaults: {
       description: 'no description',
-      attendees: [],
-      photo: 'images/event.jpg' // http://www.flickr.com/photos/hinkelstone/994941366/
+      attendees: [] //,
+      //photo: 'images/event.jpg' // http://www.flickr.com/photos/hinkelstone/994941366/
   	},
     initialize: function() {
       Backbone.Model.prototype.initialize.apply(this, arguments);

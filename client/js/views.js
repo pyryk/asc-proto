@@ -136,7 +136,7 @@ var app = app || {};
     type: 'create',
     events: _.extend(_.clone(app.views.Page.prototype.events), {
       'submit .create-form': 'addEvent',
-      'click #photo': 'addPhoto'
+      'change #photo': 'addPhoto'
     }),
     createOnEnter: function(e) {
       if (e.which === 13) {
@@ -144,7 +144,16 @@ var app = app || {};
       }
     },
     addPhoto: function(e) {
-      alert('This prototype does not support selecting a photo.');
+      console.log('photo changed');
+
+      var fileObj = e.target;
+      var file = fileObj.files[0];
+      var fr = new FileReader;
+      fr.onloadend = _.bind(function(e) {
+        var image = e.target.result;
+        this.$('#photo-preview').attr('src', image);
+      }, this);
+      fr.readAsDataURL(file);
     },
     addEvent: function(e) {
       console.log('creating event', e);
@@ -152,6 +161,10 @@ var app = app || {};
       var form = $(e.target);
       var data = _.object(_.map(form.serializeArray(), function(it) { return [it.name, it.value] }));
       data.owner = app.user.get('name');
+      
+      if (this.$('#photo-preview').attr('src') !== "images/photo-placeholder.png") {
+        data.photo = this.$('#photo-preview').attr('src');
+      }
       
       var event = new app.models.Event(data);
       app.events.add(event);
