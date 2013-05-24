@@ -161,7 +161,7 @@ var app = app || {};
       var form = $(e.target);
       var data = _.object(_.map(form.serializeArray(), function(it) { return [it.name, it.value] }));
       data.owner = app.user.get('name');
-      
+
       if (this.$('#photo-preview').attr('src') !== "images/photo-placeholder.png") {
         data.photo = this.$('#photo-preview').attr('src');
       }
@@ -180,7 +180,7 @@ var app = app || {};
       app.views.Page.prototype.initialize.apply(this, arguments);
     },
     getData: function() {
-      return {};
+      return {user: app.user};
     },
     render: function() {
       app.views.Page.prototype.render.apply(this, arguments);
