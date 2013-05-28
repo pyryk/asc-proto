@@ -126,6 +126,12 @@ var app = app || {};
 
       return this.get('owner') === app.user.get('name');
     },
+    // hotness scale, lower values better
+    hotness: function() {
+      var attendees = this.get('attendees').length;
+      var soonness = moment.duration(moment(this.get('date')).unix()-moment().unix(), 'seconds').days();
+      return (1/Math.pow(attendees+1, 2)) * Math.pow(Math.max(soonness, 2), 0.5);
+    },
     toJSON: function() {
       var data = Backbone.Model.prototype.toJSON.apply(this,arguments);
       data.date_display = this.getDateDisplay();

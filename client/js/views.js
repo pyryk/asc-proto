@@ -76,8 +76,19 @@ var app = app || {};
   app.views.index = app.views.Page.extend({
   	type: 'index',
     events: _.extend(_.clone(app.views.Page.prototype.events), {
-      
+      'click .recommended': 'recommended',
+      'click .everything': 'everything'
     }),
+    recommended: function(e) {
+      e.preventDefault();
+      this.order = 'recommended';
+      this.render();
+    },
+    everything: function(e) {
+      e.preventDefault();
+      this.order = 'default';
+      this.render();
+    },
   	initialize: function() {
   		app.views.Page.prototype.initialize.apply(this, arguments);
 
@@ -88,11 +99,21 @@ var app = app || {};
   		}, this);
   	},
   	getData: function() {
-  		return {
-        files: new app.collections.Events(app.events.filter(function(it) {
+      var files = new app.collections.Events(app.events.filter(function(it) {
           return moment(it.get('date')).isAfter(moment());
-        })).toJSON(),
-        user: app.user ? app.user.toJSON(): undefined
+        }));
+      
+      // reorder the events if necessary
+      if (this.order === 'recommended') {
+        files = new app.collections.Events(files.sortBy(function(it) {
+          return it.hotness();
+        }));
+      }
+
+  		return {
+        files: files.toJSON(),
+        user: app.user ? app.user.toJSON(): undefined,
+        orderRecommended: this.order === 'recommended'
       };
   	}
   });
