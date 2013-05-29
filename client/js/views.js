@@ -177,6 +177,7 @@ var app = app || {};
       fr.readAsDataURL(file);
     },
     addEvent: function(e) {
+      this.spinner();
       console.log('creating event', e);
       e.preventDefault();
       var form = $(e.target);
@@ -199,6 +200,14 @@ var app = app || {};
     },
     initialize: function() {
       app.views.Page.prototype.initialize.apply(this, arguments);
+    },
+    spinner: function(flag) {
+      var el = this.$el.find('.spinner');
+      if (flag === true || flag === undefined) { // spinner(true) or spinner()
+        el.show();
+      } else {
+        el.hide();
+      }
     },
     getData: function() {
       return {user: app.user};
